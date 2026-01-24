@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.active {
+  @apply text-red-500;
+}
+
+body {
+  margin: 0;
+}
+
+.menu-link {
+  @apply flex items-center gap-2;
+}
+
+.stat-card {
+  @apply bg-slate-800 border rounded-xl w-44 h-28
+         flex flex-col items-center justify-center
+         shadow-md;
+}
+
+.stat-value {
+  @apply font-sans tabular-nums text-3xl font-bold;
+}
+
+.stat-label {
+  @apply mt-1 text-xs uppercase tracking-wide text-slate-400;
+}
+
+.today-stat-card {
+  @apply grid grid-cols-2;
+}
