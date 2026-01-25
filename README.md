@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# NoZeroDays
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NoZeroDays is a simple, local-first productivity app built to help you stay consistent.  
+The idea is straightforward: even small progress counts — just don’t let a day go by with zero effort.
 
-Currently, two official plugins are available:
+The app focuses on speed, simplicity, and privacy, with no accounts, no backend, and no distractions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Live Demo
 
-## React Compiler
+🔗 https://https://react-no-zero-days-app.vercel.app/
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## ✨ Features
 
-## Expanding the ESLint configuration
+- Track daily progress effortlessly
+- Clean, minimal, distraction-free UI
+- Fully responsive (mobile & desktop)
+- Fast performance with no backend
+- Privacy-friendly: data stays on your device
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ⚠️ Important Note About Data Storage
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This app uses **browser localStorage** to store all user data.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Your progress is saved only on the current device and browser
+- Clearing browser storage or site data will permanently erase progress
+- There is no cloud sync or account system by design
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Please avoid clearing browser data if you wish to keep your progress.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🖥️ Desktop Preview
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+![Desktop Preview](./src/assets/nozerodaysPreview.png)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠️ Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Browser localStorage
+- Vercel (Deployment)
+
+## 📦 Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm or yarn
+
+### Installation
+
+```bashgit clone https://github.com/your-username/nozerodays.git
+cd nozerodays
+npm install
+npm run dev
+
+🤝 Contributing
+
+Contributions are welcome.
+If you’d like to improve the app, feel free to fork the repository and submit a pull request.
+
+🧑‍💻 Author
+
+Hafeez Mohammad
+Frontend Developer
+
+
+📜 License
+This project is licensed under the MIT License.
 ```

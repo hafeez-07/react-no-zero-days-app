@@ -33,8 +33,8 @@ function UserInput({ activity, setActivity }: ActivityProps) {
   };
 
   return (
-    <div className="bg-slate-800 border  border-slate-700 rounded-xl p-6 mt-6 w-full  ">
-      <div className="text-2xl text-center mb-4">
+    <div className="bg-slate-800 border  border-slate-700 rounded-xl px-6 pt-4 mt-6 w-full  ">
+      <div className="text-2xl text-center mb-6 font-semibold">
         <h2>Add Activity</h2>
       </div>
       <form onSubmit={submitHandler} className="space-y-4">

@@ -46,7 +46,7 @@ const TodayStats = ({ activity }: props) => {
 
   return (
     <div className="bg-slate-800 border  border-slate-700 rounded-xl p-6 mt-6 space-y-10 text-slate-300 text-xl  grid ">
-      <div className="today-stat-card">
+      <div className="today-stat-card ">
         <div>Today</div>
         <div className="flex items-center gap-2">
           <span className="font-semibold">
