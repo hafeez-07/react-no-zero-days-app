@@ -7,7 +7,7 @@ The app focuses on speed, simplicity, and privacy, with no accounts, no backend,
 
 ## 🚀 Live Demo
 
-🔗 https://https://react-no-zero-days-app.vercel.app/
+🔗 https://react-no-zero-days-app.vercel.app/
 
 ## ✨ Features
 
@@ -54,12 +54,12 @@ cd nozerodays
 npm install
 npm run dev
 
-🤝 Contributing
+### 🤝 Contributing
 
 Contributions are welcome.
 If you’d like to improve the app, feel free to fork the repository and submit a pull request.
 
-🧑‍💻 Author
+### 🧑‍💻 Author
 
 Hafeez Mohammad
 Frontend Developer
