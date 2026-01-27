@@ -45,7 +45,7 @@ const TodayStats = ({ activity }: props) => {
   const min = latest ? Number(latest.minute) : 0;
 
   return (
-    <div className="bg-slate-800 border  border-slate-700 rounded-xl p-6 mt-6 space-y-10 text-slate-300 text-xl  grid ">
+    <div className="bg-slate-800 border  border-slate-700 rounded-xl pt-12 pl-8  mt-6 space-y-10 text-slate-300 text-xl  grid ">
       <div className="today-stat-card ">
         <div>Today</div>
         <div className="flex items-center gap-2">
@@ -54,9 +54,12 @@ const TodayStats = ({ activity }: props) => {
           </span>
           <span>
             {logType === "success" ? (
-              <FaCheckCircle size={20} className="text-green-400 animate-pulse" />
+              <FaCheckCircle
+                size={20}
+                className="text-green-400 animate-pulse"
+              />
             ) : (
-              <FaTimesCircle size={20} className="text-red-400 animate-pulse"/>
+              <FaTimesCircle size={20} className="text-red-400 animate-pulse" />
             )}
           </span>
         </div>

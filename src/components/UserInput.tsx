@@ -34,10 +34,10 @@ function UserInput({ activity, setActivity }: ActivityProps) {
 
   return (
     <div className="bg-slate-800 border  border-slate-700 rounded-xl px-6 pt-4 mt-6 w-full  ">
-      <div className="text-2xl text-center mb-6 font-semibold">
+      <div className="text-2xl text-center mb-6  font-semibold">
         <h2>Add Activity</h2>
       </div>
-      <form onSubmit={submitHandler} className="space-y-4">
+      <form onSubmit={submitHandler} className="space-y-4 ">
         <div className="grid grid-cols-2 gap-3 items-center w-full">
           <label className="text-slate-300">Date</label>
           <input
@@ -75,7 +75,7 @@ function UserInput({ activity, setActivity }: ActivityProps) {
 
         <button
           type="submit"
-          className="w-full  py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition"
+          className="w-full  py-2 rounded-lg bg-amber-400 text-slate-900 font-semibold hover:bg-amber-300 transition mb-4 sm:mb-0"
         >
           Submit
         </button>
