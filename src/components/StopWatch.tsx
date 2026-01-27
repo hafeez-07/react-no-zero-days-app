@@ -38,15 +38,12 @@ const StopWatch = ({
     if (!isRunning) return;
 
     intervalRef.current = window.setInterval(() => {
-      const elapsed =
-        Math.floor(
-          (Date.now() - (startTimeRef.current ?? Date.now())) / 1000
-        );
+      const elapsed = Math.floor(
+        (Date.now() - (startTimeRef.current ?? Date.now())) / 1000,
+      );
 
-      setSeconds(prev => {
-        const total = Number(
-          localStorage.getItem("sw-elapsed") ?? 0
-        ) + elapsed;
+      setSeconds(() => {
+        const total = Number(localStorage.getItem("sw-elapsed") ?? 0) + elapsed;
 
         return total;
       });

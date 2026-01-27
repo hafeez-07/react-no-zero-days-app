@@ -27,7 +27,7 @@ function Activity({ activity, setActivity }: ActivityProps) {
   };
 
   return (
-    <div className="w-[95vw] max-w-4xl mx-auto mt-6 overflow-x-auto">
+    <div className="w-[95vw] max-w-4xl mx-auto my-6 overflow-x-auto">
       <table className="w-full border-collapse bg-slate-800 rounded-xl overflow-hidden shadow-md">
         {/* Header */}
         <thead className="bg-slate-900">
