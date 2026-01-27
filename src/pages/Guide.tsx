@@ -37,6 +37,19 @@ function Guide() {
           </p>
         </div>
 
+        {/* Edit / Replace Activity */}
+        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+          <h2 className="text-xl font-semibold text-slate-100 mb-2">
+            ✏️ Editing or correcting activity
+          </h2>
+          <p className="text-slate-300 leading-relaxed">
+            If you accidentally log incorrect data or want to update an entry,
+            you can simply log the activity again for the same date. The app
+            will automatically detect the existing entry and replace it with the
+            new one, so your progress always stays accurate.
+          </p>
+        </div>
+
         {/* Streak */}
         <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
           <h2 className="text-xl font-semibold text-slate-100 mb-2">
@@ -71,6 +84,19 @@ function Guide() {
             <li>Use the dashboard to reflect, not judge</li>
             <li>Missing a day is feedback, not failure</li>
           </ul>
+        </div>
+
+        {/* Browser Storage Notice */}
+        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+          <h2 className="text-xl font-semibold text-slate-100 mb-2">
+            ⚠️ Important: Browser storage
+          </h2>
+          <p className="text-slate-300 leading-relaxed">
+            Your activities and progress are stored securely in your browser for
+            faster access and a smoother experience. Avoid clearing your browser
+            storage or site data, as doing so will permanently remove your saved
+            activities and streaks.
+          </p>
         </div>
 
         {/* Footer note */}
