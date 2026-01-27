@@ -13,8 +13,9 @@ function UserInput({ activity, setActivity }: ActivityProps) {
 
     if (existingIndex !== -1) {
       const confirmation = window.confirm(
-        `Data of ${date} already exists.\nDo you want to replace?`,
+        `An entry for ${date} already exists.\nWould you like to replace it?`,
       );
+
       if (!confirmation) return;
 
       setActivity((prev) =>
@@ -22,14 +23,16 @@ function UserInput({ activity, setActivity }: ActivityProps) {
           index === existingIndex ? { ...item, hour, minute } : item,
         ),
       );
+
+      alert("Data updated successfully.");
     } else {
       setActivity((prev) => [...prev, { id: Date.now(), date, hour, minute }]);
+      alert("Data saved successfully.");
     }
 
     setDate("");
     setHour("");
     setMinute("");
-    alert("Data submitted");
   };
 
   return (
