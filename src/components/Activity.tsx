@@ -3,6 +3,7 @@ import type { ActivityType } from "../App";
 import { sortActivityByDateDesc } from "../utils/sorting";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
+import { toast } from "sonner";
 
 export type ActivityProps = {
   activity: ActivityType[];
@@ -42,10 +43,25 @@ function Activity({ activity, setActivity }: ActivityProps) {
     localStorage.setItem("currentPage", String(currentPage));
   }, [currentPage, sortedActivity.length]);
 
-  const handleDelete = (id: number) => {
-    if (!window.confirm("Delete this entry?")) return;
+  const handleDelete = (id: number, date: string) => {
+    toast("Confirm Delete?", {
+      description: `This will permanently remove the entry for ${date}.`,
+      duration: 6000,
+      action: {
+        label: "Delete",
+        onClick: () => {
+          setActivity((prev) => prev.filter((row) => row.id !== id));
+          toast.success("Deleted successfully!", {
+            duration: 2000,
+          });
+        },
+      },
 
-    setActivity((prev) => prev.filter((row) => row.id !== id));
+      cancel: {
+        label: "cancel",
+        onClick: () => {},
+      },
+    });
   };
 
   const currentListItems = useMemo(() => {
@@ -114,7 +130,7 @@ function Activity({ activity, setActivity }: ActivityProps) {
               {/* Delete */}
               <td className="px-2 py-1 sm:px-4 sm:py-3 text-center">
                 <button
-                  onClick={() => handleDelete(obj.id)}
+                  onClick={() => handleDelete(obj.id, obj.date)}
                   className="px-2 py-0.5 sm:px-3 sm:py-1
                      text-xs sm:text-sm
                      rounded-md

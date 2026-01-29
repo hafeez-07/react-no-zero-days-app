@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import type { ActivityProps } from "./Activity";
 
 function UserInput({ activity, setActivity }: ActivityProps) {
@@ -9,26 +10,38 @@ function UserInput({ activity, setActivity }: ActivityProps) {
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const existingIndex = activity.findIndex((item) => item.date === date);
+    const existingItem = activity.find((item) => item.date === date);
 
-    if (existingIndex !== -1) {
-      const confirmation = window.confirm(
-        `An entry for ${date} already exists.\nWould you like to replace it?`,
-      );
-
-      if (!confirmation) return;
-
-      setActivity((prev) =>
-        prev.map((item, index) =>
-          index === existingIndex ? { ...item, hour, minute } : item,
-        ),
-      );
-
-      alert("Data updated successfully.");
-    } else {
-      setActivity((prev) => [...prev, { id: Date.now(), date, hour, minute }]);
-      alert("Data saved successfully.");
+    if (existingItem) {
+      toast("Entry already exists", {
+        description: `Replace data for ${date}?`,
+        duration: 6000,
+        action: {
+          label: "Replace",
+          onClick: () => {
+            setActivity((prev) =>
+              prev.map((item) =>
+                item.date === date ? { ...item, hour, minute } : item,
+              ),
+            );
+            toast.success("Data updated successfully", {
+              duration: 2000,
+            });
+          },
+        },
+        cancel: {
+          label: "Cancel",
+          onClick: () => {},
+        },
+      });
+      return;
     }
+
+    setActivity((prev) => [...prev, { id: Date.now(), date, hour, minute }]);
+
+    toast.success("Data saved successfully", {
+      duration: 2000,
+    });
 
     setDate("");
     setHour("");

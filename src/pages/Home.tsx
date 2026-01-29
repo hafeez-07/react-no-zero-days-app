@@ -3,6 +3,7 @@ import type { ActivityType } from "../App";
 import TodayStats from "../components/TodayStats";
 import DashBoard from "../components/DashBoard";
 
+
 type HomeProps = {
   activity: ActivityType[];
   setActivity: React.Dispatch<React.SetStateAction<ActivityType[]>>;

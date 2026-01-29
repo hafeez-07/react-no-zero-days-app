@@ -10,6 +10,7 @@ import "./App.css";
 import About from "./pages/About";
 import Guide from "./pages/Guide";
 import Motivation from "./pages/Motivation";
+import { Toaster } from "sonner";
 
 export type ActivityType = {
   id: number;
@@ -62,6 +63,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen w-full bg-slate-600 overflow-x-hidden">
       <Header streak={streak} />
+      <Toaster position="top-center"/>
 
       <main className="flex-1 mt-[9vh]">
         <Routes>
