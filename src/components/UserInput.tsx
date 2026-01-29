@@ -61,6 +61,7 @@ function UserInput({ activity, setActivity }: ActivityProps) {
             className="bg-slate-900 border border-slate-600 rounded-md p-2 text-slate-100 focus:ring-2 focus:ring-amber-400"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            max={new Date().toISOString().split("T")[0]}
             required
           />
         </div>
