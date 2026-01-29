@@ -31,7 +31,7 @@ body {
 }
 
 .pagination-btn{
-  @apply border py-1 px-2 rounded bg-slate-800 border-slate-700  disabled:cursor-not-allowed disabled:bg-slate-700 disabled:border-slate-700 
+  @apply border py-1 px-2 rounded bg-slate-800 border-slate-700  disabled:cursor-not-allowed disabled:opacity-30
 }
 
 .activity-table-head{
