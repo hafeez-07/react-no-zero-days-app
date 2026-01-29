@@ -8,7 +8,6 @@ type HomeProps = {
   setActivity: React.Dispatch<React.SetStateAction<ActivityType[]>>;
 };
 
-
 function Home({ activity, setActivity }: HomeProps) {
   return (
     <div className="flex justify-center px-4 ">
@@ -17,9 +16,9 @@ function Home({ activity, setActivity }: HomeProps) {
           <UserInput activity={activity} setActivity={setActivity} />
           <TodayStats activity={activity} />
         </div>
-        <div className="max-w-6xl mx-auto mb-3">
-       <DashBoard activity={activity} />
-      </div>
+        <div className="hidden sm:block max-w-6xl mx-auto mb-3">
+          <DashBoard activity={activity} />
+        </div>
       </div>
     </div>
   );
