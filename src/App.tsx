@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Guide from "./pages/Guide";
 import Motivation from "./pages/Motivation";
 import { Toaster } from "sonner";
+import { toast } from "sonner";
 
 export type ActivityType = {
   id: number;
@@ -60,10 +61,28 @@ function App() {
     return count;
   }, [sortedActivity]);
 
+  const lastCelebratedStreak =
+    Number(localStorage.getItem("lastCelebratedStreak")) || 0;
+
+  if (streak > 0 && streak % 7 === 0 && streak > lastCelebratedStreak) {
+    setTimeout(() => {
+      toast(`🔥 ${streak} day streak. Keep going.`, {
+        style: {
+          background: "#16a34a",
+          color: "#fff",
+          fontWeight: "600",
+          textAlign: "center",
+        },
+      });
+
+      localStorage.setItem("lastCelebratedStreak", String(streak));
+    }, 1000);
+  }
+
   return (
     <div className="flex flex-col min-h-screen w-full bg-slate-600 overflow-x-hidden">
       <Header streak={streak} />
-      <Toaster position="top-center"/>
+      <Toaster position="top-center" />
 
       <main className="flex-1 mt-[9vh]">
         <Routes>
@@ -92,7 +111,7 @@ function App() {
           />
           <Route path="/about" element={<About />} />
           <Route path="/guide" element={<Guide />} />
-          <Route path="/motivation" element={<Motivation />}/>
+          <Route path="/motivation" element={<Motivation />} />
         </Routes>
       </main>
 
