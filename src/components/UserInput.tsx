@@ -25,7 +25,7 @@ function UserInput({ activity, setActivity }: ActivityProps) {
               ),
             );
             toast.success("Data updated successfully", {
-              duration: 2000,
+              duration: 1500,
             });
           },
         },
@@ -40,7 +40,7 @@ function UserInput({ activity, setActivity }: ActivityProps) {
     setActivity((prev) => [...prev, { id: Date.now(), date, hour, minute }]);
 
     toast.success("Data saved successfully", {
-      duration: 2000,
+      duration: 1500,
     });
 
     setDate("");

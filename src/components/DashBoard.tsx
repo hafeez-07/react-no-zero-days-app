@@ -27,6 +27,7 @@ function DashBoard({ activity }: props) {
     return sortActivityByDateDesc(activity);
   }, [activity]);
 
+  
   const diffInDays = useMemo(() => {
     if (sortedActivity.length === 0) return 1;
 

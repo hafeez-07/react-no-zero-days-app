@@ -4,6 +4,7 @@ import { sortActivityByDateDesc } from "../utils/sorting";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
 import { toast } from "sonner";
+import { STORAGE_KEYS } from "../constants/StorageKeys";
 
 export type ActivityProps = {
   activity: ActivityType[];
@@ -67,7 +68,7 @@ function Activity({ activity, setActivity }: ActivityProps) {
         onClick: () => {
           setActivity((prev) => prev.filter((row) => row.id !== id));
           toast.success("Deleted successfully!", {
-            duration: 2000,
+            duration: 1500,
           });
         },
       },
@@ -94,15 +95,21 @@ function Activity({ activity, setActivity }: ActivityProps) {
               label: "undo",
               onClick: () => {
                 setActivity(backupActivity.current);
+                backupActivity.current = [];
               },
             },
-            cancel: {
-              label: "cancel",
-              onClick: () => {},
-            },
           });
+          setTimeout(() => {
+            //if undo clicked no backups, if undo is not clicked means activity is cleared , so use backup length
+            if (backupActivity.current.length > 0) {
+              localStorage.removeItem(STORAGE_KEYS.ACTIVITY);
+              localStorage.removeItem(STORAGE_KEYS.LAST_CELEBRATED);
+              localStorage.removeItem(STORAGE_KEYS.CURRENT_PAGE);
+            }
+          }, 6000);
         },
       },
+
       cancel: {
         label: "cancel",
         onClick: () => {},

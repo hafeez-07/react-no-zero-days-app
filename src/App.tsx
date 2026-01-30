@@ -76,7 +76,7 @@ function App() {
       });
 
       localStorage.setItem("lastCelebratedStreak", String(streak));
-    }, 1000);
+    }, 1500);
   }
 
   return (
