@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import type { ActivityType } from "../App";
 import { sortActivityByDateDesc } from "../utils/sorting";
 import { FaAngleLeft } from "react-icons/fa";
@@ -11,6 +11,7 @@ export type ActivityProps = {
 };
 
 function Activity({ activity, setActivity }: ActivityProps) {
+  const backupActivity = useRef<ActivityType[]>([]);
   const [currentPage, setCurrentPage] = useState(() => {
     const raw = localStorage.getItem("currentPage");
     const page = Number(raw);
@@ -26,7 +27,7 @@ function Activity({ activity, setActivity }: ActivityProps) {
     isMobile = true;
   }
 
-  const itemsPerPage = isMobile ? 11 : 8;
+  const itemsPerPage = isMobile ? 10 : 7;
   const totalPage = Math.max(
     1,
     Math.ceil(sortedActivity.length / itemsPerPage),
@@ -42,6 +43,20 @@ function Activity({ activity, setActivity }: ActivityProps) {
     if (sortedActivity.length == 0) return;
     localStorage.setItem("currentPage", String(currentPage));
   }, [currentPage, sortedActivity.length]);
+
+  const currentListItems = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return sortedActivity.slice(start, end);
+  }, [currentPage, sortedActivity]);
+
+  if (activity.length === 0) {
+    return (
+      <div className="mt-6 text-center text-slate-400 text-lg">
+        No activity yet — start tracking today 🚀
+      </div>
+    );
+  }
 
   const handleDelete = (id: number, date: string) => {
     toast("Confirm Delete?", {
@@ -64,22 +79,51 @@ function Activity({ activity, setActivity }: ActivityProps) {
     });
   };
 
-  const currentListItems = useMemo(() => {
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return sortedActivity.slice(start, end);
-  }, [currentPage, sortedActivity]);
-
-  if (activity.length === 0) {
-    return (
-      <div className="mt-6 text-center text-slate-400 text-lg">
-        No activity yet — start tracking today 🚀
-      </div>
-    );
-  }
+  const deleteAllActivity = () => {
+    toast("Confirm clear All?", {
+      description: "You will lose all the progress and activities permanently",
+      duration: 8000,
+      action: {
+        label: "clear all",
+        onClick: () => {
+          backupActivity.current = activity;
+          setActivity([]);
+          toast("All activity cleared", {
+            duration: 6000,
+            action: {
+              label: "undo",
+              onClick: () => {
+                setActivity(backupActivity.current);
+              },
+            },
+            cancel: {
+              label: "cancel",
+              onClick: () => {},
+            },
+          });
+        },
+      },
+      cancel: {
+        label: "cancel",
+        onClick: () => {},
+      },
+    });
+  };
 
   return (
     <div className="w-[95vw] max-w-4xl mx-auto mt-6 overflow-x-auto ">
+      <div className="flex justify-between items-center px-10 mb-5">
+        <h2 className=" text-2xl sm:text-3xl  font-bold text-slate-800">
+          Activity Logs
+        </h2>
+
+        <button
+          onClick={deleteAllActivity}
+          className="border font-semibold rounded text-sm py-1 px-2 text-slate-800 bg-slate-500 border-slate-500 hover:ring-2 hover:ring-slate-400"
+        >
+          Clear all
+        </button>
+      </div>
       <table className="w-full border-collapse bg-slate-800 rounded-xl overflow-hidden shadow-md">
         {/* Header */}
         <thead className="bg-slate-900">
