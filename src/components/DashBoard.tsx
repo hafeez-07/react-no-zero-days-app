@@ -27,9 +27,8 @@ function DashBoard({ activity }: props) {
     return sortActivityByDateDesc(activity);
   }, [activity]);
 
-  
   const diffInDays = useMemo(() => {
-    if (sortedActivity.length === 0) return 1;
+    if (sortedActivity.length === 0) return 0;
 
     const startDate = new Date(
       sortedActivity[sortedActivity.length - 1].date,
@@ -71,7 +70,8 @@ function DashBoard({ activity }: props) {
   const { bestDay, maxHour, remainingMaxMinute } = bestDayData;
 
   const missedDays = Math.max(0, diffInDays - activeDays);
-  const consistency = Math.floor((activeDays / diffInDays) * 100);
+  const consistency =
+    activity.length == 0 ? 100 : Math.floor((activeDays / diffInDays) * 100);
 
   const getLongestStreak = () => {
     if (activity.length == 0) {
