@@ -13,6 +13,7 @@ The app focuses on speed, simplicity, and privacy, with no accounts, no backend,
 
 - Track daily progress effortlessly
 - Clean, minimal, distraction-free UI
+- Safe delete actions with confirmation and undo
 - Fully responsive (mobile & desktop)
 - Fast performance with no backend
 - Privacy-friendly: data stays on your device
@@ -49,7 +50,7 @@ Please avoid clearing browser data if you wish to keep your progress.
 
 ### Installation
 
-```bashgit clone https://github.com/your-username/nozerodays.git
+git clone https://github.com/your-username/nozerodays.git
 cd nozerodays
 npm install
 npm run dev
@@ -64,7 +65,6 @@ If you’d like to improve the app, feel free to fork the repository and submit 
 Hafeez Mohammad
 Frontend Developer
 
+### 📜 License
 
-📜 License
 This project is licensed under the MIT License.
-```

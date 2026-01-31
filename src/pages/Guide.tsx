@@ -50,6 +50,18 @@ function Guide() {
           </p>
         </div>
 
+        {/* Delete & Undo */}
+        <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
+          <h2 className="text-xl font-semibold text-slate-100 mb-2">
+            🗑️ Deleting activity
+          </h2>
+          <p className="text-slate-300 leading-relaxed">
+            You can delete individual activity entries or clear all activity.
+            For safety, destructive actions show a confirmation and allow a
+            short undo window in case of mistakes.
+          </p>
+        </div>
+
         {/* Streak */}
         <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700">
           <h2 className="text-xl font-semibold text-slate-100 mb-2">
@@ -95,7 +107,8 @@ function Guide() {
             Your activities and progress are stored securely in your browser for
             faster access and a smoother experience. Avoid clearing your browser
             storage or site data, as doing so will permanently remove your saved
-            activities and streaks.
+            activities and streaks.- Deleting all activity will remove stored
+            data for this app
           </p>
         </div>
 
