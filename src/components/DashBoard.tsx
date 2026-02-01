@@ -1,11 +1,20 @@
 import type { ActivityType } from "../App";
+import { useMemo } from "react";
+import { sortActivityByDateDesc } from "../utils/sorting";
+import {
+  FaFire,
+  FaClock,
+  FaChartLine,
+  FaCalendarDay,
+  FaBolt,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaPercent,
+} from "react-icons/fa";
 
 type props = {
   activity: ActivityType[];
 };
-
-import { useMemo } from "react";
-import { sortActivityByDateDesc } from "../utils/sorting";
 
 function DashBoard({ activity }: props) {
   const totalMinutes = activity.reduce(
@@ -23,9 +32,10 @@ function DashBoard({ activity }: props) {
   const avgHours = Math.floor(avgMinutes / 60);
   const remainingAvgMinutes = avgMinutes % 60;
 
-  const sortedActivity = useMemo(() => {
-    return sortActivityByDateDesc(activity);
-  }, [activity]);
+  const sortedActivity = useMemo(
+    () => sortActivityByDateDesc(activity),
+    [activity],
+  );
 
   const diffInDays = useMemo(() => {
     if (sortedActivity.length === 0) return 0;
@@ -71,19 +81,20 @@ function DashBoard({ activity }: props) {
 
   const missedDays = Math.max(0, diffInDays - activeDays);
   const consistency =
-    activity.length == 0 ? 100 : Math.floor((activeDays / diffInDays) * 100);
+    activity.length === 0 ? 100 : Math.floor((activeDays / diffInDays) * 100);
 
   const getLongestStreak = () => {
-    if (activity.length == 0) {
-      return 0;
-    }
+    if (activity.length === 0) return 0;
+
     let streak = 1,
       maxStreak = 1;
+
     for (let i = 1; i < sortedActivity.length; i++) {
-      let prevDate = new Date(sortedActivity[i].date).getTime();
-      let curDate = new Date(sortedActivity[i - 1].date).getTime();
+      const prevDate = new Date(sortedActivity[i].date).getTime();
+      const curDate = new Date(sortedActivity[i - 1].date).getTime();
       const difference = (curDate - prevDate) / (1000 * 60 * 60 * 24);
-      if (difference == 1) {
+
+      if (difference === 1) {
         streak++;
         maxStreak = Math.max(streak, maxStreak);
       } else {
@@ -95,57 +106,122 @@ function DashBoard({ activity }: props) {
 
   const longestStreak = getLongestStreak();
 
+  // return (
+  //   <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center">
+
+  //     <div className="stat-card border-amber-400/30">
+
+  //       <p className="stat-value text-amber-500">{longestStreak}🔥</p>
+  //       <p className="stat-label">Longest Streak</p>
+  //     </div>
+
+  //     <div className="stat-card border-emerald-400/30">
+  //       <p className="stat-value text-emerald-500">
+  //         {totalHours}h {totalRemainingMinutes}m
+  //       </p>
+  //       <p className="stat-label">Total Hours</p>
+  //     </div>
+
+  //     <div className="stat-card border-sky-400/30">
+  //       <p className="stat-value text-sky-500">
+  //         {avgHours}h {remainingAvgMinutes}m
+  //       </p>
+  //       <p className="stat-label">Avg / Day</p>
+  //     </div>
+
+  //     <div className="stat-card border-violet-400/30">
+  //       <p className="stat-value text-violet-500 text-lg">
+  //         {bestDay ?? "No Data"}
+  //       </p>
+  //       <p className="stat-label">Best Day</p>
+  //     </div>
+
+  //     <div className="stat-card border-rose-400/30">
+  //       <p className="stat-value text-rose-500">
+  //         {maxHour}h {remainingMaxMinute}m
+  //       </p>
+  //       <p className="stat-label">Max Day</p>
+  //     </div>
+
+  //     <div className="stat-card border-green-400/30">
+  //       <p className="stat-value text-green-500">{activeDays}</p>
+  //       <p className="stat-label">Active Days</p>
+  //     </div>
+
+  //     <div className="stat-card border-slate-400/30">
+  //       <p className="stat-value text-slate-500 dark:text-slate-300">
+  //         {missedDays}
+  //       </p>
+  //       <p className="stat-label">Missed Days</p>
+  //     </div>
+
+  //     <div className="stat-card border-cyan-400/30 ">
+  //       <p className="stat-value text-cyan-500 ">{consistency}%</p>
+  //       <p className="stat-label">Consistency</p>
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className=" mt-6 w-full  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center  ">
-      <div className="stat-card border-amber-400/40">
-        <p className="stat-value text-amber-400">{longestStreak}</p>
+    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center mt-6">
+      <div className="stat-card border-amber-400/30">
+        <FaFire className="text-amber-400/80 text-sm mb-1" />
         <p className="stat-label">Longest Streak</p>
+        <p className="stat-value text-amber-500">{longestStreak}</p>
       </div>
 
-      <div className="stat-card border-emerald-400/40">
-        <p className="stat-value text-emerald-400">
+      <div className="stat-card border-emerald-400/30">
+        <FaClock className="text-emerald-400/80 text-sm mb-1" />
+        <p className="stat-label">Total Hours</p>
+        <p className="stat-value text-emerald-500">
           {totalHours}h {totalRemainingMinutes}m
         </p>
-        <p className="stat-label">Total Hours</p>
       </div>
 
-      <div className="stat-card border-sky-400/40">
-        <p className="stat-value text-sky-400">
+      <div className="stat-card border-sky-400/30">
+        <FaChartLine className="text-sky-400/80 text-sm mb-1" />
+        <p className="stat-label">Avg / Day</p>
+        <p className="stat-value text-sky-500">
           {avgHours}h {remainingAvgMinutes}m
         </p>
-        <p className="stat-label">Avg / Day</p>
       </div>
 
-      <div className="stat-card border-violet-400/40">
-        <p className="stat-value text-violet-400 text-lg">
+      <div className="stat-card border-violet-400/30">
+        <FaCalendarDay className="text-violet-400/80 text-sm mb-1" />
+        <p className="stat-label">Best Day</p>
+        <p className="stat-value text-violet-500 text-lg">
           {bestDay ?? "No Data"}
         </p>
-        <p className="stat-label">Best Day</p>
       </div>
 
-      <div className="stat-card border-rose-400/40">
-        <p className="stat-value text-rose-400">
+      <div className="stat-card border-rose-400/30">
+        <FaBolt className="text-rose-400/80 text-sm mb-1" />
+        <p className="stat-label">Max Day</p>
+        <p className="stat-value text-rose-500">
           {maxHour}h {remainingMaxMinute}m
         </p>
-        <p className="stat-label">Max Day</p>
       </div>
 
-      <div className="stat-card border-green-400/40">
-        <p className="stat-value text-green-400">{activeDays}</p>
+      <div className="stat-card border-green-400/30">
+        <FaCheckCircle className="text-green-400/80 text-sm mb-1" />
         <p className="stat-label">Active Days</p>
+        <p className="stat-value text-green-500">{activeDays}</p>
       </div>
 
-      <div className="stat-card border-slate-400/40">
-        <p className="stat-value text-slate-300">{missedDays}</p>
+      <div className="stat-card border-slate-400/30">
+        <FaTimesCircle className="text-slate-400/80 text-sm mb-1" />
         <p className="stat-label">Missed Days</p>
+        <p className="stat-value text-slate-500 dark:text-slate-300">
+          {missedDays}
+        </p>
       </div>
 
-      <div className="stat-card border-cyan-400/40">
-        <p className="stat-value text-cyan-400">{consistency}%</p>
+      <div className="stat-card border-cyan-400/30">
+        <FaPercent className="text-cyan-400/80 text-sm mb-1" />
         <p className="stat-label">Consistency</p>
+        <p className="stat-value text-cyan-500">{consistency}%</p>
       </div>
     </div>
   );
 }
-
 export default DashBoard;

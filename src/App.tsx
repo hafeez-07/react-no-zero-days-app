@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
@@ -9,7 +9,6 @@ import StopWatch from "./components/StopWatch";
 import "./App.css";
 import About from "./pages/About";
 import Guide from "./pages/Guide";
-import Motivation from "./pages/Motivation";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
 
@@ -22,6 +21,10 @@ export type ActivityType = {
 
 function App() {
   const [seconds, setSeconds] = useState(0);
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const theme = (localStorage.getItem("theme") as "light" | "dark") ?? "dark";
+    return theme;
+  });
   const [isRunning, setIsRunning] = useState(false);
   const [activity, setActivity] = useState<ActivityType[]>(() => {
     try {
@@ -36,6 +39,12 @@ function App() {
     localStorage.setItem("activity", JSON.stringify(activity));
   }, [activity]);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
   const sortedActivity = useMemo(() => {
     return [...activity].sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
@@ -47,7 +56,6 @@ function App() {
     if (activity.length === 0) return 0;
     let today = new Date().setHours(0, 0, 0, 0);
     let expectedDate = today;
-
     let count = 0;
     for (let i = sortedActivity.length - 1; i >= 0; i--) {
       let activityDate = new Date(sortedActivity[i].date).setHours(0, 0, 0, 0);
@@ -64,24 +72,30 @@ function App() {
   const lastCelebratedStreak =
     Number(localStorage.getItem("lastCelebratedStreak")) || 0;
 
-  if (streak > 0 && streak % 7 === 0 && streak > lastCelebratedStreak) {
-    setTimeout(() => {
-      toast(`🔥 ${streak} day streak. Keep going.`, {
-        style: {
-          background: "#16a34a",
-          color: "#fff",
-          fontWeight: "600",
-          textAlign: "center",
-        },
-      });
+  useEffect(() => {
+    if (streak > 0 && streak % 7 === 0 && streak > lastCelebratedStreak) {
+      setTimeout(() => {
+        toast(`🔥 ${streak} day streak. Keep going.`, {
+          style: {
+            background: "#16a34a",
+            color: "#fff",
+            fontWeight: "600",
+            textAlign: "center",
+          },
+        });
 
-      localStorage.setItem("lastCelebratedStreak", String(streak));
-    }, 1500);
-  }
+        localStorage.setItem("lastCelebratedStreak", String(streak));
+      }, 1500);
+    }
+  }, [streak]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   return (
-    <div className="flex flex-col min-h-screen w-full bg-slate-600 overflow-x-hidden">
-      <Header streak={streak} />
+    <div className="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-slate-950 overflow-x-hidden">
+      <Header streak={streak} theme={theme} toggleTheme={toggleTheme} />
       <Toaster position="top-center" />
 
       <main className="flex-1 mt-[9vh]">
@@ -111,7 +125,7 @@ function App() {
           />
           <Route path="/about" element={<About />} />
           <Route path="/guide" element={<Guide />} />
-          <Route path="/motivation" element={<Motivation />} />
+        
         </Routes>
       </main>
 

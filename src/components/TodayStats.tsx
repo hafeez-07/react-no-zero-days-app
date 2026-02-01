@@ -1,8 +1,7 @@
 import type { ActivityType } from "../App";
 import { useMemo } from "react";
 import { sortActivityByDateDesc } from "../utils/sorting";
-import { FaTimesCircle } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaTimesCircle, FaCheckCircle } from "react-icons/fa";
 
 type props = {
   activity: ActivityType[];
@@ -16,7 +15,7 @@ const TodayStats = ({ activity }: props) => {
     [activity],
   );
 
-  const latest = sortedActivity[0]; // MOST RECENT
+  const latest = sortedActivity[0];
 
   const isLoggedToday = useMemo(() => {
     if (!latest) return false;
@@ -45,41 +44,41 @@ const TodayStats = ({ activity }: props) => {
   const min = latest ? Number(latest.minute) : 0;
 
   return (
-    <div className="bg-slate-800 border  border-slate-700 rounded-xl pt-12 pl-8  mt-6 space-y-10 text-slate-300 text-xl  grid ">
-      <div className="today-stat-card ">
-        <div>Today</div>
-        <div className="flex items-center gap-2">
-          <span className="font-semibold">
-            {isLoggedToday ? "Logged " : "Not Logged "}
-          </span>
-          <span>
-            {logType === "success" ? (
-              <FaCheckCircle
-                size={20}
-                className="text-green-400 animate-pulse"
-              />
-            ) : (
-              <FaTimesCircle size={20} className="text-red-400 animate-pulse" />
-            )}
-          </span>
+    <div
+      className="
+        mt-6 py-7 px-8 space-y-8
+        rounded-xl grid text-xl
+        bg-white dark:bg-slate-800
+        border border-slate-200 dark:border-slate-700
+        text-slate-700 dark:text-slate-300
+        shadow-sm dark:shadow-none
+      "
+    >
+      <div className="today-stat-card">
+        <div className="text-slate-500 dark:text-slate-400">Today</div>
+        <div className="flex items-center gap-2 font-semibold">
+          {isLoggedToday ? "Logged" : "Not Logged"}
+          {logType === "success" ? (
+            <FaCheckCircle className="text-green-500 animate-pulse" size={20} />
+          ) : (
+            <FaTimesCircle className="text-red-500 animate-pulse" size={20} />
+          )}
         </div>
       </div>
-      <div className="today-stat-card">
-        <div>Last updated </div>
 
+      <div className="today-stat-card">
+        <div className="text-slate-500 dark:text-slate-400">Last updated</div>
         <div className="font-semibold">{lastUpdated}</div>
       </div>
-      <div className="today-stat-card">
-        <div>Duration </div>
 
+      <div className="today-stat-card">
+        <div className="text-slate-500 dark:text-slate-400">Duration</div>
         <div className="font-semibold">
-          {sortedActivity.length == 0
-            ? "No Duration Logged "
+          {sortedActivity.length === 0
+            ? "No Duration Logged"
             : `${hour}h ${min}m`}
         </div>
       </div>
-
-      <div></div>
     </div>
   );
 };
