@@ -1,5 +1,5 @@
 import darkLogo from "../assets/noZeroDaysLogoDark.png";
-import lightLogo from "../assets/noZeroDaysLogo.png";
+import lightLogo from "../assets/noZeroDaysLogoLight.png";
 import { NavLink } from "react-router-dom";
 import { FaSun, FaMoon } from "react-icons/fa";
 import {
