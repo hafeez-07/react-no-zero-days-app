@@ -102,19 +102,6 @@ function App() {
     }
   }, [streak]);
 
-  useEffect(() => {
-    console.log("ACTIVITY:", localStorage.getItem(STORAGE_KEYS.ACTIVITY));
-
-    console.log(
-      "LAST CELEBRATED STREAK :",
-      Number(localStorage.getItem(STORAGE_KEYS.LAST_CELEBRATED)),
-    );
-    console.log(
-      "CUR PAGE",
-      Number(localStorage.getItem(STORAGE_KEYS.CURRENT_PAGE)),
-    );
-  }, [activity, streak]);
-
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
