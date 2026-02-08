@@ -29,7 +29,7 @@ function Header({ streak, theme, toggleTheme }: HeaderProps) {
         fixed top-0 left-0 w-full h-[9vh] z-50 font-semibold
         bg-slate-50 dark:bg-slate-950
         border-b border-slate-200 dark:border-slate-800
-        shadow-sm dark:shadow-none
+        shadow-sm dark:shadow-none 
       ">
         <div className="flex items-center justify-between px-3 sm:px-6 h-full">
           <img

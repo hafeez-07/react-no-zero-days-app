@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { STORAGE_KEYS } from "../constants/StorageKeys";
 
 type timerProps = {
   seconds: number;
@@ -18,9 +19,9 @@ const StopWatch = ({
 
   // restore on refresh
   useEffect(() => {
-    const savedElapsed = localStorage.getItem("sw-elapsed");
-    const savedStart = localStorage.getItem("sw-start");
-    const savedRunning = localStorage.getItem("sw-running");
+    const savedElapsed = localStorage.getItem(STORAGE_KEYS.SW_ELAPSED);
+    const savedStart = localStorage.getItem(STORAGE_KEYS.SW_START);
+    const savedRunning = localStorage.getItem(STORAGE_KEYS.SW_RUNNING);
 
     if (savedElapsed) setSeconds(Number(savedElapsed));
     if (savedRunning === "true" && savedStart) {
@@ -40,7 +41,7 @@ const StopWatch = ({
 
       setSeconds(() => {
         const total =
-          Number(localStorage.getItem("sw-elapsed") ?? 0) + elapsed;
+          Number(localStorage.getItem(STORAGE_KEYS.SW_ELAPSED) ?? 0) + elapsed;
         return total;
       });
     }, 1000);
@@ -52,15 +53,15 @@ const StopWatch = ({
 
   const startHandler = () => {
     startTimeRef.current = Date.now();
-    localStorage.setItem("sw-start", String(startTimeRef.current));
-    localStorage.setItem("sw-running", "true");
+    localStorage.setItem(STORAGE_KEYS.SW_START, String(startTimeRef.current));
+    localStorage.setItem(STORAGE_KEYS.SW_RUNNING, "true");
     setIsRunning(true);
   };
 
   const pauseHandler = () => {
-    localStorage.setItem("sw-elapsed", String(seconds));
-    localStorage.setItem("sw-running", "false");
-    localStorage.removeItem("sw-start");
+    localStorage.setItem(STORAGE_KEYS.SW_ELAPSED, String(seconds));
+    localStorage.setItem(STORAGE_KEYS.SW_RUNNING, "false");
+    localStorage.removeItem(STORAGE_KEYS.SW_START);
     startTimeRef.current = null;
     setIsRunning(false);
   };
@@ -69,9 +70,9 @@ const StopWatch = ({
     setIsRunning(false);
     setSeconds(0);
     startTimeRef.current = null;
-    localStorage.removeItem("sw-elapsed");
-    localStorage.removeItem("sw-start");
-    localStorage.removeItem("sw-running");
+    localStorage.removeItem(STORAGE_KEYS.SW_ELAPSED);
+    localStorage.removeItem(STORAGE_KEYS.SW_START);
+    localStorage.removeItem(STORAGE_KEYS.SW_RUNNING);
   };
 
   const hour = Math.floor(seconds / 3600);
@@ -83,7 +84,7 @@ const StopWatch = ({
   return (
     <div
       className="
-        mt-12 mx-auto w-[92vw] sm:w-[360px]
+        mt-12 mx-auto w-[92vw] sm:w-90
         rounded-2xl p-8
         bg-white dark:bg-slate-900
         border border-slate-200 dark:border-slate-700

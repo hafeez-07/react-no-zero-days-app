@@ -13,7 +13,7 @@ export type ActivityProps = {
 function Activity({ activity, setActivity }: ActivityProps) {
   const backupActivity = useRef<ActivityType[]>([]);
   const [currentPage, setCurrentPage] = useState(() => {
-    const raw = localStorage.getItem("currentPage");
+    const raw = localStorage.getItem(STORAGE_KEYS.CURRENT_PAGE);
     const page = Number(raw);
     return Number.isInteger(page) && page > 0 ? page : 1;
   });
@@ -23,9 +23,7 @@ function Activity({ activity, setActivity }: ActivityProps) {
     [activity],
   );
 
-  let isMobile = false;
-  if (window.innerWidth < 640) isMobile = true;
-
+  const isMobile = window.matchMedia("(max-width: 640px)").matches;
   const itemsPerPage = isMobile ? 10 : 7;
   const totalPage = Math.max(
     1,
@@ -36,9 +34,13 @@ function Activity({ activity, setActivity }: ActivityProps) {
     if (currentPage > totalPage) setCurrentPage(totalPage);
   }, [totalPage, currentPage]);
 
+  //CURRENT PAGE
   useEffect(() => {
-    if (sortedActivity.length == 0) return;
-    localStorage.setItem("currentPage", String(currentPage));
+    if (sortedActivity.length == 0) {
+      localStorage.removeItem(STORAGE_KEYS.CURRENT_PAGE);
+      return;
+    }
+    localStorage.setItem(STORAGE_KEYS.CURRENT_PAGE, String(currentPage));
   }, [currentPage, sortedActivity.length]);
 
   const currentListItems = useMemo(() => {
@@ -89,13 +91,6 @@ function Activity({ activity, setActivity }: ActivityProps) {
               },
             },
           });
-          setTimeout(() => {
-            if (backupActivity.current.length > 0) {
-              localStorage.removeItem(STORAGE_KEYS.ACTIVITY);
-              localStorage.removeItem(STORAGE_KEYS.LAST_CELEBRATED);
-              localStorage.removeItem(STORAGE_KEYS.CURRENT_PAGE);
-            }
-          }, 6000);
         },
       },
       cancel: { label: "Cancel", onClick: () => {} },
@@ -126,12 +121,14 @@ function Activity({ activity, setActivity }: ActivityProps) {
       </div>
 
       {/* Table */}
-      <table className="
+      <table
+        className="
         w-full border-collapse overflow-hidden rounded-xl
         bg-white dark:bg-slate-800
         border border-slate-200 dark:border-slate-700
         shadow-sm dark:shadow-none
-      ">
+      "
+      >
         <thead className="bg-slate-100 dark:bg-slate-900">
           <tr>
             <th className="activity-table-head">Date</th>
@@ -147,9 +144,11 @@ function Activity({ activity, setActivity }: ActivityProps) {
               key={obj.id}
               className={`
                 border-t border-slate-200 dark:border-slate-700
-                ${index % 2 === 0
-                  ? "bg-white dark:bg-slate-800"
-                  : "bg-slate-50 dark:bg-slate-900"}
+                ${
+                  index % 2 === 0
+                    ? "bg-white dark:bg-slate-800"
+                    : "bg-slate-50 dark:bg-slate-900"
+                }
                 hover:bg-slate-100 dark:hover:bg-slate-700
                 transition
               `}
@@ -195,9 +194,7 @@ function Activity({ activity, setActivity }: ActivityProps) {
           <FaAngleLeft />
         </button>
 
-        <button className="pagination-btn cursor-default">
-          {currentPage}
-        </button>
+        <button className="pagination-btn cursor-default">{currentPage}</button>
 
         <button
           className="pagination-btn"

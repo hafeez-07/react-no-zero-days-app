@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
@@ -11,6 +11,8 @@ import About from "./pages/About";
 import Guide from "./pages/Guide";
 import { Toaster } from "sonner";
 import { toast } from "sonner";
+import { sortActivityByDateDesc } from "./utils/sorting";
+import { STORAGE_KEYS } from "./constants/StorageKeys";
 
 export type ActivityType = {
   id: number;
@@ -22,13 +24,14 @@ export type ActivityType = {
 function App() {
   const [seconds, setSeconds] = useState(0);
   const [theme, setTheme] = useState<"light" | "dark">(() => {
-    const theme = (localStorage.getItem("theme") as "light" | "dark") ?? "dark";
+    const theme =
+      (localStorage.getItem(STORAGE_KEYS.THEME) as "light" | "dark") ?? "dark";
     return theme;
   });
   const [isRunning, setIsRunning] = useState(false);
   const [activity, setActivity] = useState<ActivityType[]>(() => {
     try {
-      const saved = localStorage.getItem("activity");
+      const saved = localStorage.getItem(STORAGE_KEYS.ACTIVITY);
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -36,20 +39,24 @@ function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem("activity", JSON.stringify(activity));
+    if (activity.length === 0) {
+      localStorage.removeItem(STORAGE_KEYS.ACTIVITY);
+      localStorage.removeItem(STORAGE_KEYS.LAST_CELEBRATED);
+    } else {
+      localStorage.setItem(STORAGE_KEYS.ACTIVITY, JSON.stringify(activity));
+    }
   }, [activity]);
 
   useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
+    localStorage.setItem(STORAGE_KEYS.THEME, theme);
   }, [theme]);
 
-  const sortedActivity = useMemo(() => {
-    return [...activity].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-    );
-  }, [activity]);
+  const sortedActivity = useMemo(
+    () => sortActivityByDateDesc(activity),
+    [activity],
+  );
 
   // streak calculation
   const streak = useMemo(() => {
@@ -57,7 +64,7 @@ function App() {
     let today = new Date().setHours(0, 0, 0, 0);
     let expectedDate = today;
     let count = 0;
-    for (let i = sortedActivity.length - 1; i >= 0; i--) {
+    for (let i = 0; i < sortedActivity.length; i++) {
       let activityDate = new Date(sortedActivity[i].date).setHours(0, 0, 0, 0);
       let diffInDays = (expectedDate - activityDate) / (1000 * 60 * 60 * 24);
 
@@ -69,12 +76,17 @@ function App() {
     return count;
   }, [sortedActivity]);
 
-  const lastCelebratedStreak =
-    Number(localStorage.getItem("lastCelebratedStreak")) || 0;
-
   useEffect(() => {
+    //if the streak is broken , reset the celebration
+    if (streak == 0) {
+      localStorage.removeItem(STORAGE_KEYS.LAST_CELEBRATED);
+      return;
+    }
+    const lastCelebratedStreak =
+      Number(localStorage.getItem(STORAGE_KEYS.LAST_CELEBRATED)) || 0;
+
     if (streak > 0 && streak % 7 === 0 && streak > lastCelebratedStreak) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         toast(`🔥 ${streak} day streak. Keep going.`, {
           style: {
             background: "#16a34a",
@@ -84,10 +96,24 @@ function App() {
           },
         });
 
-        localStorage.setItem("lastCelebratedStreak", String(streak));
+        localStorage.setItem(STORAGE_KEYS.LAST_CELEBRATED, String(streak));
       }, 1500);
+      return () => clearTimeout(timeoutId);
     }
   }, [streak]);
+
+  useEffect(() => {
+    console.log("ACTIVITY:", localStorage.getItem(STORAGE_KEYS.ACTIVITY));
+
+    console.log(
+      "LAST CELEBRATED STREAK :",
+      Number(localStorage.getItem(STORAGE_KEYS.LAST_CELEBRATED)),
+    );
+    console.log(
+      "CUR PAGE",
+      Number(localStorage.getItem(STORAGE_KEYS.CURRENT_PAGE)),
+    );
+  }, [activity, streak]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
@@ -125,7 +151,6 @@ function App() {
           />
           <Route path="/about" element={<About />} />
           <Route path="/guide" element={<Guide />} />
-        
         </Routes>
       </main>
 

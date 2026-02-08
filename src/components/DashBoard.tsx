@@ -106,61 +106,7 @@ function DashBoard({ activity }: props) {
 
   const longestStreak = getLongestStreak();
 
-  // return (
-  //   <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center">
 
-  //     <div className="stat-card border-amber-400/30">
-
-  //       <p className="stat-value text-amber-500">{longestStreak}🔥</p>
-  //       <p className="stat-label">Longest Streak</p>
-  //     </div>
-
-  //     <div className="stat-card border-emerald-400/30">
-  //       <p className="stat-value text-emerald-500">
-  //         {totalHours}h {totalRemainingMinutes}m
-  //       </p>
-  //       <p className="stat-label">Total Hours</p>
-  //     </div>
-
-  //     <div className="stat-card border-sky-400/30">
-  //       <p className="stat-value text-sky-500">
-  //         {avgHours}h {remainingAvgMinutes}m
-  //       </p>
-  //       <p className="stat-label">Avg / Day</p>
-  //     </div>
-
-  //     <div className="stat-card border-violet-400/30">
-  //       <p className="stat-value text-violet-500 text-lg">
-  //         {bestDay ?? "No Data"}
-  //       </p>
-  //       <p className="stat-label">Best Day</p>
-  //     </div>
-
-  //     <div className="stat-card border-rose-400/30">
-  //       <p className="stat-value text-rose-500">
-  //         {maxHour}h {remainingMaxMinute}m
-  //       </p>
-  //       <p className="stat-label">Max Day</p>
-  //     </div>
-
-  //     <div className="stat-card border-green-400/30">
-  //       <p className="stat-value text-green-500">{activeDays}</p>
-  //       <p className="stat-label">Active Days</p>
-  //     </div>
-
-  //     <div className="stat-card border-slate-400/30">
-  //       <p className="stat-value text-slate-500 dark:text-slate-300">
-  //         {missedDays}
-  //       </p>
-  //       <p className="stat-label">Missed Days</p>
-  //     </div>
-
-  //     <div className="stat-card border-cyan-400/30 ">
-  //       <p className="stat-value text-cyan-500 ">{consistency}%</p>
-  //       <p className="stat-label">Consistency</p>
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center mt-6">
