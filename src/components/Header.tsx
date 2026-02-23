@@ -25,12 +25,15 @@ function Header({ streak, theme, toggleTheme }: HeaderProps) {
   return (
     <>
       {/* HEADER */}
-      <header className="
+      <header
+        className="
+     
         fixed top-0 left-0 w-full h-[9vh] z-50 font-semibold
         bg-slate-50 dark:bg-slate-950
         border-b border-slate-200 dark:border-slate-800
         shadow-sm dark:shadow-none 
-      ">
+      "
+      >
         <div className="flex items-center justify-between px-3 sm:px-6 h-full">
           <img
             src={theme === "dark" ? darkLogo : lightLogo}
@@ -39,24 +42,44 @@ function Header({ streak, theme, toggleTheme }: HeaderProps) {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            <nav className="
+            <nav
+              className="
               flex items-center gap-6
               text-slate-700 dark:text-slate-200
-            ">
-              <NavLink className="hover:text-amber-500 transition" to="/">Home</NavLink>
-              <NavLink className="hover:text-amber-500 transition" to="/dashboard">Dashboard</NavLink>
-              <NavLink className="hover:text-amber-500 transition" to="/activity">Activity</NavLink>
-              <NavLink className="hover:text-amber-500 transition" to="/about">About</NavLink>
-              <NavLink className="hover:text-amber-500 transition" to="/guide">Guide</NavLink>
+            "
+            >
+              <NavLink className="hover:text-amber-500 transition" to="/">
+                Home
+              </NavLink>
+              <NavLink
+                className="hover:text-amber-500 transition"
+                to="/dashboard"
+              >
+                Dashboard
+              </NavLink>
+              <NavLink
+                className="hover:text-amber-500 transition"
+                to="/activity"
+              >
+                Activity
+              </NavLink>
+              <NavLink className="hover:text-amber-500 transition" to="/about">
+                About
+              </NavLink>
+              <NavLink className="hover:text-amber-500 transition" to="/guide">
+                Guide
+              </NavLink>
               <NavLink className="hover:text-amber-500 transition" to="/timer">
                 <FaStopwatch />
               </NavLink>
             </nav>
 
-            <div className="
+            <div
+              className="
               flex items-center gap-1 font-mono
               text-slate-800 dark:text-slate-100
-            ">
+            "
+            >
               <span className="text-amber-400">🔥</span>
               <span>{streak}</span>
             </div>
@@ -80,7 +103,7 @@ function Header({ streak, theme, toggleTheme }: HeaderProps) {
               <span className="text-amber-400">🔥</span>
               <span>{streak}</span>
             </div>
-              <button
+            <button
               onClick={toggleTheme}
               className="
                 p-2 rounded-full
@@ -122,10 +145,12 @@ function Header({ streak, theme, toggleTheme }: HeaderProps) {
           ${open ? "translate-x-0" : "translate-x-full"}
         `}
       >
-        <div className="
+        <div
+          className="
           p-5 flex flex-col items-end gap-4
           text-slate-700 dark:text-slate-200
-        ">
+        "
+        >
           <button
             className="
               sm:hidden p-2 rounded-md
@@ -136,12 +161,44 @@ function Header({ streak, theme, toggleTheme }: HeaderProps) {
             <FaBars size={22} />
           </button>
 
-          <NavLink to="/" onClick={() => setOpen(false)} className="menu-link">Home <FaHome /></NavLink>
-          <NavLink to="/dashboard" onClick={() => setOpen(false)} className="menu-link">Dashboard <FaChartBar /></NavLink>
-          <NavLink to="/activity" onClick={() => setOpen(false)} className="menu-link">Activity <FaClipboard /></NavLink>
-          <NavLink to="/timer" onClick={() => setOpen(false)} className="menu-link">Timer <FaStopwatch /></NavLink>
-          <NavLink to="/about" onClick={() => setOpen(false)} className="menu-link">About <FaInfoCircle /></NavLink>
-          <NavLink to="/guide" onClick={() => setOpen(false)} className="menu-link">Guide <FaBookOpen /></NavLink>
+          <NavLink to="/" onClick={() => setOpen(false)} className="menu-link">
+            Home <FaHome />
+          </NavLink>
+          <NavLink
+            to="/dashboard"
+            onClick={() => setOpen(false)}
+            className="menu-link"
+          >
+            Dashboard <FaChartBar />
+          </NavLink>
+          <NavLink
+            to="/activity"
+            onClick={() => setOpen(false)}
+            className="menu-link"
+          >
+            Activity <FaClipboard />
+          </NavLink>
+          <NavLink
+            to="/timer"
+            onClick={() => setOpen(false)}
+            className="menu-link"
+          >
+            Timer <FaStopwatch />
+          </NavLink>
+          <NavLink
+            to="/about"
+            onClick={() => setOpen(false)}
+            className="menu-link"
+          >
+            About <FaInfoCircle />
+          </NavLink>
+          <NavLink
+            to="/guide"
+            onClick={() => setOpen(false)}
+            className="menu-link"
+          >
+            Guide <FaBookOpen />
+          </NavLink>
         </div>
       </aside>
     </>
