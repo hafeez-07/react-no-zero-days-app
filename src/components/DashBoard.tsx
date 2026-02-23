@@ -106,10 +106,8 @@ function DashBoard({ activity }: props) {
 
   const longestStreak = getLongestStreak();
 
-
-
   return (
-    <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center mt-6">
+    <div className="max-w-5xl mx-auto w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 place-items-center mt-6">
       <div className="stat-card border-amber-400/30">
         <FaFire className="text-amber-400/80 text-sm mb-1" />
         <p className="stat-label">Longest Streak</p>
